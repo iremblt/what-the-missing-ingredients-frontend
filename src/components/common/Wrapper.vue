@@ -62,36 +62,41 @@
                       v-if="activeClass.includes('recomendation')"
                       class="menu__link"
                       to="/recipe/recomendation"
-                      >Recommend Recipe</router-link
+                      >Recommended Recipe Our New Feature</router-link
                     >
                   </h2>
-                  <ul class="wrapper-slider__slider__box__text__user-info">
-                    <li class="user">
-                      <router-link
-                        v-if="activeClass.includes('recomendation')"
-                        class="menu__link"
-                        to="/recipe/recomendation"
-                        >Recommend Recipe</router-link
-                      >
-                    </li>
-                    <li class="user">
-                      <router-link
-                        v-if="activeClass.includes('recomendation')"
-                        class="menu__link"
-                        to="/recipe/recomendation"
-                        >Recommend Recipe</router-link
-                      >
-                    </li>
-                    <li class="total-time"></li>
+                  <ul
+                    v-if="!activeClass.includes('recomendation')"
+                    class="wrapper-slider__slider__box__text__user-info"
+                  >
+                    <i class="icons fa fa-regular fa-user" />
+                    <router-link
+                      class="menu__link icons__link"
+                      to="/recipe/recomendation"
+                      >User name</router-link
+                    >
+                    <i class="icons fa fa-solid fa-utensils" />
+                    <div class="icons__text">Preapere Time</div>
+                    <i class="icons fa fa-solid fa-clock" />
+                    <div class="icons__text">Total Time</div>
                   </ul>
-                  <div v-if="activeClass.includes('recomendation')">
-                    When you start making the recipe you find on the internet,
-                    you realize that many of the ingredients in your
-                    refrigerator are missing and stop trying to search for a
-                    recipe that matches the ingredients you have! The new
-                    recommendation button on our website will suggest the most
-                    suitable recipes for your ingredients. Thus, it will
-                    facilitate the recipe search and suggest the most suitable.
+                  <div
+                    class="wrapper-slider__slider__box__text__content"
+                    v-if="activeClass.includes('recomendation')"
+                  >
+                    <p>
+                      When you start making the recipe you find on the internet,
+                      you realize that many of the ingredients in your
+                      refrigerator are missing and stop trying to search for a
+                      recipe that matches the ingredients you have! The new
+                      recommendation button on our website will suggest the most
+                      suitable recipes for your ingredients. Thus, it will
+                      facilitate the recipe search and suggest the most
+                      suitable.
+                    </p>
+                    <p class="sub-text">
+                      If you want to try this feature go to recommend page
+                    </p>
                   </div>
                 </div>
               </div>
@@ -183,20 +188,38 @@ export default {
           padding: 45px 30px 62px 30px;
         }
         &__title {
-          margin-top: 0;
           font-family: "Lora", serif;
           font-style: italic;
-          font-weight: 400;
           font-size: 30px;
-          line-height: 36px;
           color: #000000;
-          margin-bottom: 30px;
+          margin-bottom: 2px;
         }
         &__user-info {
-          position: relative;
-          margin-bottom: 44px;
+          font-size: 14px;
+          margin-bottom: 30px;
           list-style: none;
           padding-left: 0;
+          .icons {
+            margin-left: 10px;
+            margin-right: 10px;
+            color: #231f20;
+            &__text {
+              display: inline-block;
+            }
+            &__link {
+              border-bottom: 2px inset #f94616;
+            }
+          }
+        }
+        &__content {
+          font-family: "Lato", sans-serif;
+          font-size: 14px;
+          line-height: 24px;
+          .sub-text {
+            font-style: italic;
+            font-weight: bold;
+            color: #78593a;
+          }
         }
       }
     }

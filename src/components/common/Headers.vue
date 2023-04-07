@@ -32,7 +32,7 @@
           <div class="col-md-2">
             <div class="logo">
               <router-link to="/" class="logo__link">
-                <img class="logo__img" src="@/assets/Logo.png" />
+                <img class="logo__img" src="@/assets/logo.png" />
               </router-link>
             </div>
           </div>
