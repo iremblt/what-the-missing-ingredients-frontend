@@ -32,7 +32,7 @@
           <div class="col-md-2">
             <div class="logo">
               <router-link to="/" class="logo__link">
-                <img class="logo__img" src="@/assets/logo.png" />
+                <img class="logo__img" src="@/assets/Logo.png" />
               </router-link>
             </div>
           </div>
@@ -83,7 +83,6 @@ export default {
 <style lang="scss">
 .header {
   padding-top: 20px;
-  padding-bottom: 20px;
   position: relative;
   z-index: 1;
 }
