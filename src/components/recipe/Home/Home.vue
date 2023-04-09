@@ -3,18 +3,18 @@
     <div v-if="isLoading"><LoadingPage></LoadingPage></div>
     <div v-else>
       <Wrappers :top-2-recipes="top2Recipes"></Wrappers>
-      <!-- <RecipeListHome></RecipeListHome> -->
+      <RecipeListHome></RecipeListHome>
     </div>
   </div>
 </template>
 
 <script>
 import Wrappers from "./Wrapper.vue";
-// import RecipeListHome from "./List.vue";
+import RecipeListHome from "./List.vue";
 import LoadingPage from "@/components/common/Loading.vue";
 import {
   getRecipeListWithPagination,
-  // getMostPopularRecipeListWithPagination,
+  getMostPopularRecipeListWithPagination,
   getRecipeAvgRate,
 } from "@/utils/recipe";
 
@@ -23,20 +23,20 @@ export default {
   components: {
     Wrappers,
     LoadingPage,
-    // RecipeListHome,
+    RecipeListHome,
   },
   data() {
     return {
       PageSize: 1,
       PageNumberPerPage: 20,
       recipeList: [],
-      // popularRecipeList: [],
       top2Recipes: [],
-      isLoading: false,
+      isLoading: true,
     };
   },
   async created() {
     await this.getRecipeList();
+    this.getPopularRecipeList();
   },
   methods: {
     async getRecipeList() {
@@ -56,18 +56,16 @@ export default {
         })
         .catch((error) => console.error(error));
     },
-    // async getPopularRecipeList() {
-    //   await getMostPopularRecipeListWithPagination({
-    //     PageSize: this.PageSize,
-    //     PageNumberPerPage: this.PageNumberPerPage,
-    //   })
-    //     .then((response) => {
-    //       this.popularRecipeList = response.data || [];
-    //       this.$store.commit("setPopularRecipeList", response?.data);
-    //       this.isLoading = false;
-    //     })
-    //     .catch((error) => console.error(error));
-    // },
+    async getPopularRecipeList() {
+      return await getMostPopularRecipeListWithPagination({
+        PageSize: this.PageSize,
+        PageNumberPerPage: this.PageNumberPerPage,
+      })
+        .then((response) => {
+          this.$store.commit("setPopularRecipeList", response?.data);
+        })
+        .catch((error) => console.error(error));
+    },
     async getRecipesAvgRate(ids) {
       return await getRecipeAvgRate(ids)
         .then((response) => {

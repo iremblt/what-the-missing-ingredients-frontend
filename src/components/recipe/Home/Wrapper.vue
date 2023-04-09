@@ -20,7 +20,6 @@
                     style="width: 100%; height: 425px; cursor: pointer"
                   />
                 </div>
-
                 <div class="item item2" ref="item2">
                   <img
                     :src="secondRecipe.Recipe_Photo"
@@ -158,37 +157,6 @@
                         v-bind="starRatingOptions"
                       ></star-rating>
                     </div>
-                    <!-- <div
-                      class="wrapper-slider__slider__box__text__recomendation-box"
-                    >
-                      <span class="title">Similiar Recipes</span>
-                      <ul class="list">
-                        <li class="list__item">
-                          <router-link to="/recipe/detail/2">
-                            <img
-                              class="list__item__image"
-                              src="https://images.media-allrecipes.com/userphotos/560x315/4465807.jpg"
-                            />
-                          </router-link>
-                        </li>
-                        <li class="list__item">
-                          <router-link to="/recipe/detail/2">
-                            <img
-                              class="list__item__image"
-                              src="https://images.media-allrecipes.com/userphotos/560x315/4465807.jpg"
-                            />
-                          </router-link>
-                        </li>
-                        <li class="list__item">
-                          <router-link to="/recipe/detail/2">
-                            <img
-                              class="list__item__image"
-                              src="https://images.media-allrecipes.com/userphotos/560x315/4465807.jpg"
-                            />
-                          </router-link>
-                        </li>
-                      </ul>
-                    </div> -->
                   </div>
                   <div v-else-if="activeClass.includes('2')">
                     <div class="wrapper-slider__slider__box__text__content">
@@ -209,37 +177,6 @@
                         v-bind="starRatingOptions"
                       ></star-rating>
                     </div>
-                    <!-- <div
-                      class="wrapper-slider__slider__box__text__recomendation-box"
-                    >
-                      <span class="title">Similiar Recipes</span>
-                      <ul class="list">
-                        <li class="list__item">
-                          <router-link to="/recipe/detail/2">
-                            <img
-                              class="list__item__image"
-                              src="https://images.media-allrecipes.com/userphotos/560x315/4465807.jpg"
-                            />
-                          </router-link>
-                        </li>
-                        <li class="list__item">
-                          <router-link to="/recipe/detail/2">
-                            <img
-                              class="list__item__image"
-                              src="https://images.media-allrecipes.com/userphotos/560x315/4465807.jpg"
-                            />
-                          </router-link>
-                        </li>
-                        <li class="list__item">
-                          <router-link to="/recipe/detail/2">
-                            <img
-                              class="list__item__image"
-                              src="https://images.media-allrecipes.com/userphotos/560x315/4465807.jpg"
-                            />
-                          </router-link>
-                        </li>
-                      </ul>
-                    </div> -->
                   </div>
                 </div>
               </div>
