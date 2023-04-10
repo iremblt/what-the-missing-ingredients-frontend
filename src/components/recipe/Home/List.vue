@@ -10,51 +10,53 @@
         </span>
       </div>
       <div class="recipes-list__container__cards">
-        <div class="card">
+        <div class="recipe-card">
           <div
             v-for="(recipe, index) in getMostPopularRecipes"
             :key="index"
-            class="card__title-image"
+            class="recipe-card__title-image"
           >
-            <div class="card__title-image__image">
-              <router-link
-                class="image-link"
-                :to="{
-                  name: 'recipeDetail',
-                  params: { id: recipe.RecipeID },
-                }"
-              >
-                <img
-                  class="image"
-                  :src="recipe.Recipe_Photo"
-                  :alt="recipe.Recipe_Name"
-                />
-              </router-link>
-            </div>
-            <div class="card__title-image__text">
-              <div class="container">
-                <h3 class="container__title">
-                  <router-link
-                    class="menu__link"
-                    :to="{
-                      name: 'recipeDetail',
-                      params: { id: recipe.RecipeID },
-                    }"
-                    >{{ recipe.Recipe_Name }}</router-link
-                  >
-                </h3>
-                <div class="container__seperator"></div>
-                <p class="container__text">
-                  {{ recipe.Directions.split("**").slice(0, 1).toString() }}
-                </p>
+            <div class="recipe-card__title-image__container">
+              <div class="recipe-card__title-image__container__image">
                 <router-link
-                  class="menu__link container__link"
+                  class="image-link"
                   :to="{
                     name: 'recipeDetail',
                     params: { id: recipe.RecipeID },
                   }"
-                  >More ->
+                >
+                  <img
+                    class="image"
+                    :src="recipe.Recipe_Photo"
+                    :alt="recipe.Recipe_Name"
+                  />
                 </router-link>
+              </div>
+              <div class="recipe-card__title-image__container__text">
+                <div class="container-area">
+                  <h3 class="container-area__title">
+                    <router-link
+                      class="menu__link"
+                      :to="{
+                        name: 'recipeDetail',
+                        params: { id: recipe.RecipeID },
+                      }"
+                      >{{ recipe.Recipe_Name }}</router-link
+                    >
+                  </h3>
+                  <div class="container-area__seperator"></div>
+                  <p class="container-area__text">
+                    {{ recipe.Directions.split("**").slice(0, 1).toString() }}
+                  </p>
+                  <router-link
+                    class="menu__link container-area__link"
+                    :to="{
+                      name: 'recipeDetail',
+                      params: { id: recipe.RecipeID },
+                    }"
+                    >More ->
+                  </router-link>
+                </div>
               </div>
             </div>
           </div>
@@ -69,9 +71,7 @@ export default {
   name: "RecipeListHome",
   props: {},
   data() {
-    return {
-      most_popular_six_recipes: this.popularRecipeList.slice(0, 6),
-    };
+    return {};
   },
   watch: {},
   async created() {
@@ -112,52 +112,54 @@ export default {
       }
     }
     &__cards {
-      display: flex;
-      flex-wrap: wrap;
-      .card {
-        width: 50%;
-        height: auto;
-        text-align: center;
+      .recipe-card {
+        display: flex;
+        flex-wrap: wrap;
+
         &__title-image {
-          display: flex;
-          &__image {
-            width: 50%;
-            .image {
-              cursor: pointer;
-            }
-          }
-          &__text {
-            background: #f4f0ee;
-            width: 50%;
+          width: 50%;
+          padding: 5px;
+          text-align: center;
+          &__container {
             display: flex;
-            padding: 10px;
-            .container {
-              background: #ffffff;
+            &__image {
+              width: 50%;
+              .image {
+                cursor: pointer;
+              }
+            }
+            &__text {
+              background: #f4f0ee;
+              display: flex;
               padding: 10px;
-              border: 1px solid #e4d9d1;
-              &__title {
-                font-size: 16px;
-                margin-top: 10px;
-                font-family: "Lato", sans-serif;
-                text-transform: uppercase;
-                font-weight: bold;
-              }
-              &__seperator {
-                width: 50px;
-                height: 3px;
-                background: #f94616;
-                margin: auto auto 10px;
-              }
-              &__text {
-                font-family: "Karla", sans-serif;
-                font-size: 14px;
-                line-height: 24px;
-              }
-              &__link {
-                font-family: "Lora", serif;
-                font-style: italic;
-                font-weight: bold;
-                font-size: 14px;
+              .container-area {
+                background: #ffffff;
+                border: 1px solid #e4d9d1;
+                &__title {
+                  font-size: 16px;
+                  margin-top: 10px;
+                  font-family: "Lato", sans-serif;
+                  text-transform: uppercase;
+                  font-weight: bold;
+                }
+                &__seperator {
+                  width: 50px;
+                  height: 3px;
+                  background: #f94616;
+                  margin: auto auto 10px;
+                }
+                &__text {
+                  font-family: "Karla", sans-serif;
+                  font-size: 14px;
+                  line-height: 24px;
+                }
+                &__link {
+                  font-family: "Lora", serif;
+                  font-style: italic;
+                  font-weight: bold;
+                  font-size: 14px;
+                  padding: 5px 0 !important;
+                }
               }
             }
           }

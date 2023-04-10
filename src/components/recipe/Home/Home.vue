@@ -36,7 +36,6 @@ export default {
   },
   async created() {
     await this.getRecipeList();
-    this.getPopularRecipeList();
   },
   methods: {
     async getRecipeList() {
@@ -70,6 +69,7 @@ export default {
       return await getRecipeAvgRate(ids)
         .then((response) => {
           this.top2Recipes = response.data || [];
+          this.getPopularRecipeList();
         })
         .catch((error) => console.error(error));
     },
