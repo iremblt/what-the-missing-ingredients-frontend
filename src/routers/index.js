@@ -4,6 +4,7 @@ import HomePage from '../views/recipe/HomePage.vue'
 import RecipeDetails from '../views/recipe/DetailsPage.vue'
 import RecipeAdd from '../views/recipe/CreateOrEditPage.vue'
 import RecipeEdit from '../views/recipe/CreateOrEditPage.vue'
+import RecipeRecomendation from '../views/recipe/Recommendation.vue'
 import Login from '../views/user/LoginPage.vue'
 import Register from '../views/user/RegisterPage.vue'
 import UserList from '../views/user/ListPage.vue'
@@ -40,7 +41,7 @@ const routes = [
   {
     path: '/recipe/recomendation',
     name: 'recipeRecomendation',
-    component: RecipeAdd
+    component: RecipeRecomendation
   },
   {
     path: '/login',
