@@ -4,6 +4,7 @@
     <div v-else>
       <Wrappers :top-2-recipes="top2Recipes"></Wrappers>
       <RecipeListHome></RecipeListHome>
+      <ChefIntroduction />
     </div>
   </div>
 </template>
@@ -11,6 +12,7 @@
 <script>
 import Wrappers from "./Wrapper.vue";
 import RecipeListHome from "./List.vue";
+import ChefIntroduction from "./Chef.vue";
 import LoadingPage from "@/components/common/Loading.vue";
 import {
   getRecipeListWithPagination,
@@ -24,6 +26,7 @@ export default {
     Wrappers,
     LoadingPage,
     RecipeListHome,
+    ChefIntroduction,
   },
   data() {
     return {

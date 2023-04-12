@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import List from "@/components/recipe/List.vue";
+import List from "@/components/recipe/List/Index.vue";
 export default {
   name: "RecipeList",
   components: {

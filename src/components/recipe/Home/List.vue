@@ -100,7 +100,8 @@ export default {
     &__header {
       text-align: center;
       &__title {
-        font-family: "Lato", sans-serif;
+        font-family: "Lora", serif;
+        font-style: italic;
         font-weight: bolder;
         text-transform: uppercase;
         font-size: 25px;
@@ -121,6 +122,8 @@ export default {
           padding: 5px;
           text-align: center;
           &__container {
+            height: 82%;
+            overflow: hidden;
             display: flex;
             &__image {
               width: 50%;
@@ -133,12 +136,13 @@ export default {
               display: flex;
               padding: 10px;
               .container-area {
+                &:hover {
+                  background: #e6f7c2;
+                }
                 background: #ffffff;
                 border: 1px solid #e4d9d1;
                 &__title {
                   font-size: 16px;
-                  margin-top: 10px;
-                  font-family: "Lato", sans-serif;
                   text-transform: uppercase;
                   font-weight: bold;
                 }
@@ -151,14 +155,14 @@ export default {
                 &__text {
                   font-family: "Karla", sans-serif;
                   font-size: 14px;
-                  line-height: 24px;
+                  line-height: 21px;
                 }
                 &__link {
                   font-family: "Lora", serif;
                   font-style: italic;
                   font-weight: bold;
-                  font-size: 14px;
-                  padding: 5px 0 !important;
+                  font-size: 13px;
+                  margin-bottom: 7rem;
                 }
               }
             }

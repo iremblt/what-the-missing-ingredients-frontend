@@ -44,4 +44,9 @@ export default {
 .recommendation-banner {
   background-image: url("@/assets/recommendation-banner.jpg");
 }
+.recipes-banner {
+  background-size: cover;
+  background-position-y: center;
+  background-image: url("@/assets/recipes-banner.jpg");
+}
 </style>
