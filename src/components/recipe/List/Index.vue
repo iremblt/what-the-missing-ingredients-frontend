@@ -4,15 +4,109 @@
       title="All Recipe List"
       background-image-type="recipes-banner"
     />
-    <SearchBox />
+    <SearchBox @searched="searched($event)" />
+    <div v-if="isLoading"><LoadingPage /></div>
+    <RecipeList
+      v-else
+      :recipe-list-search="recipeListWithSearch"
+      :recipe-list="getRecipes"
+      :most-popular="getMostPopularRecipes"
+      @pageChanged="pageChanged($event)"
+    />
   </div>
 </template>
 <script>
 import BannerPage from "@/components/common/Banner.vue";
 import SearchBox from "@/components/common/Search.vue";
+import LoadingPage from "@/components/common/Loading.vue";
+import RecipeList from "@/components/recipe/List/List.vue";
+import {
+  searchRecipeList,
+  getRecipeListWithPagination,
+  getMostPopularRecipeListWithPagination,
+} from "@/utils/recipe";
 export default {
-  name: "RecipeList",
-  components: { BannerPage, SearchBox },
+  name: "RecipeListIndex",
+  components: { BannerPage, SearchBox, LoadingPage, RecipeList },
+  data() {
+    return {
+      recipeListWithSearch: [],
+      isSearched: false,
+      isLoading: false,
+      PageSize: 1,
+      PageNumberPerPage: 9,
+    };
+  },
+  async created() {
+    if (this.getRecipes.length === 0) {
+      // this.isLoading = true;
+      await this.getRecipeList();
+    }
+    if (this.getMostPopularRecipes.length === 0) {
+      // this.isLoading = true;
+      await this.getPopularRecipeList();
+    }
+  },
+  computed: {
+    getMostPopularRecipes() {
+      return this.$store.getters._getPopularRecipeList
+        ? this.$store.getters._getPopularRecipeList
+        : [];
+    },
+    getRecipes() {
+      return this.isSearched
+        ? this.searchRecipeList
+        : this.$store.getters._getPaginationRecipeList
+        ? this.$store.getters._getPaginationRecipeList
+        : [];
+    },
+  },
+  methods: {
+    searched(recipe) {
+      console.log(recipe);
+      this.isLoading = true;
+      this.isSearched = true;
+      this.recipeSearch(recipe);
+    },
+    async recipeSearch(recipe) {
+      await searchRecipeList({
+        RecipeName: recipe,
+        PageSize: 1,
+        PageNumberPerPage: 9,
+      })
+        .then((response) => {
+          this.recipeListWithSearch = response.data || [];
+          this.isLoading = false;
+        })
+        .catch((error) => console.error(error));
+    },
+    async getRecipeList() {
+      await getRecipeListWithPagination({
+        PageSize: this.PageSize,
+        PageNumberPerPage: this.PageNumberPerPage,
+      })
+        .then((response) => {
+          this.$store.commit("setPaginationRecipeList", response?.data);
+          this.isLoading = false;
+        })
+        .catch((error) => console.error(error));
+    },
+    async getPopularRecipeList() {
+      return await getMostPopularRecipeListWithPagination({
+        PageSize: 1,
+        PageNumberPerPage: 5,
+      })
+        .then((response) => {
+          this.$store.commit("setPopularRecipeList", response?.data);
+        })
+        .catch((error) => console.error(error));
+    },
+    async pageChanged(page) {
+      this.PageSize = page;
+      this.isLoading = true;
+      await this.getRecipeList();
+    },
+  },
 };
 </script>
 <style lang="scss"></style>

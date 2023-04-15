@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       PageSize: 1,
-      PageNumberPerPage: 20,
+      PageNumberPerPage: 9,
       recipeList: [],
       top2Recipes: [],
       isLoading: true,

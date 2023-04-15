@@ -49,4 +49,8 @@ export default {
   background-position-y: center;
   background-image: url("@/assets/recipes-banner.jpg");
 }
+.add-banner {
+  background-position: top;
+  background-image: url("@/assets/add-banner.jpg");
+}
 </style>

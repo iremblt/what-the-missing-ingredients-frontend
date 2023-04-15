@@ -12,6 +12,7 @@
                   id="search_box__form__input"
                   class="search_box__form__input__bar"
                   placeholder="recipe"
+                  v-model="text"
                 />
               </label>
               <button class="search_box__form__button">
@@ -29,50 +30,56 @@
 <script>
 export default {
   name: "SearchBox",
+  data() {
+    return {
+      text: "",
+    };
+  },
+  methods: {
+    submitSearch() {
+      this.$emit("searched", this.text);
+    },
+  },
 };
 </script>
 <style lang="scss">
 .search_box_page {
+  border-bottom: 1px solid #b9d971;
+  border-radius: 8px;
   &__area {
-    max-width: 1156px !important;
+    max-width: 1150px !important;
     margin-right: auto;
     margin-left: auto;
     &__bar {
-      background: #6ebe3b;
-      overflow: hidden;
       .search_box {
         display: flex;
         align-items: center;
-        padding-left: 20px;
-        height: 66px;
-        background: #5eaa2e;
+        padding-left: 6px;
+        height: 74px;
         &__form {
-          color: #ffffff;
-          font-size: 16px;
+          font-size: 17px;
           font-family: "Lora", serif;
           font-style: italic;
           position: relative;
           margin-top: 4px;
+          font-weight: bold;
           &__input {
             font-weight: bold;
             &__bar {
-              margin-left: 10px;
-              border: none;
-              height: 34px;
-              color: #798287;
-              padding-left: 10px;
-              padding-right: 34px;
+              margin-left: 30px;
+              height: 39px;
+              border-radius: 20px;
+              border: 2px solid #b9d971;
+              padding-left: 30px;
             }
           }
           &__button {
             position: absolute;
-            right: 0;
-            height: 34px;
+            right: 10px;
+            height: 39px;
             background: transparent;
             border: none;
-            color: #000000;
-            &__icon {
-            }
+            color: #e52d2d;
           }
         }
       }
