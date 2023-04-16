@@ -11,6 +11,8 @@
       :recipe-list-search="recipeListWithSearch"
       :recipe-list="getRecipes"
       :most-popular="getMostPopularRecipes"
+      :active-page="this.PageSize"
+      :total-page="totalPage"
       @pageChanged="pageChanged($event)"
     />
   </div>
@@ -24,6 +26,8 @@ import {
   searchRecipeList,
   getRecipeListWithPagination,
   getMostPopularRecipeListWithPagination,
+  getRecipeList,
+  getRecipeListWithSearch,
 } from "@/utils/recipe";
 export default {
   name: "RecipeListIndex",
@@ -35,15 +39,18 @@ export default {
       isLoading: false,
       PageSize: 1,
       PageNumberPerPage: 9,
+      totalPage: 0,
     };
   },
   async created() {
+    this.isLoading = true;
+    await this.getAllRecipeList();
     if (this.getRecipes.length === 0) {
-      // this.isLoading = true;
-      await this.getRecipeList();
+      this.isLoading = true;
+      await this.getPaginationRecipeList();
     }
     if (this.getMostPopularRecipes.length === 0) {
-      // this.isLoading = true;
+      this.isLoading = true;
       await this.getPopularRecipeList();
     }
   },
@@ -55,18 +62,18 @@ export default {
     },
     getRecipes() {
       return this.isSearched
-        ? this.searchRecipeList
+        ? this.recipeListWithSearch
         : this.$store.getters._getPaginationRecipeList
         ? this.$store.getters._getPaginationRecipeList
         : [];
     },
   },
   methods: {
-    searched(recipe) {
-      console.log(recipe);
+    async searched(recipe) {
       this.isLoading = true;
       this.isSearched = true;
-      this.recipeSearch(recipe);
+      await this.recipeSearch(recipe);
+      await this.getAllRecipeListWithSearch(recipe);
     },
     async recipeSearch(recipe) {
       await searchRecipeList({
@@ -75,18 +82,37 @@ export default {
         PageNumberPerPage: 9,
       })
         .then((response) => {
+          this.PageSize = 1;
           this.recipeListWithSearch = response.data || [];
           this.isLoading = false;
         })
         .catch((error) => console.error(error));
     },
-    async getRecipeList() {
+    async getPaginationRecipeList() {
       await getRecipeListWithPagination({
         PageSize: this.PageSize,
         PageNumberPerPage: this.PageNumberPerPage,
       })
         .then((response) => {
           this.$store.commit("setPaginationRecipeList", response?.data);
+          this.isLoading = false;
+        })
+        .catch((error) => console.error(error));
+    },
+    async getAllRecipeList() {
+      await getRecipeList()
+        .then((response) => {
+          this.totalPage = response.data?.length;
+          this.isLoading = false;
+        })
+        .catch((error) => console.error(error));
+    },
+    async getAllRecipeListWithSearch(search) {
+      await getRecipeListWithSearch({
+        RecipeName: search,
+      })
+        .then((response) => {
+          this.totalPage = response.data?.length;
           this.isLoading = false;
         })
         .catch((error) => console.error(error));
@@ -98,13 +124,14 @@ export default {
       })
         .then((response) => {
           this.$store.commit("setPopularRecipeList", response?.data);
+          this.isLoading = false;
         })
         .catch((error) => console.error(error));
     },
     async pageChanged(page) {
       this.PageSize = page;
       this.isLoading = true;
-      await this.getRecipeList();
+      await this.getPaginationRecipeList();
     },
   },
 };

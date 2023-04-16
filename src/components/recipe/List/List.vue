@@ -6,19 +6,23 @@
           <div class="recipe-list-page__container__lists">
             <h2 class="recipe-header">New Recipes</h2>
             <div class="recipe-listing">
-              <div class="recipe-listing__card">
+              <div
+                class="recipe-listing__card"
+                v-for="(recipe, index) in recipeList"
+                :key="index"
+              >
                 <div class="recipe-listing__card__image">
                   <router-link
                     class="image-link"
                     :to="{
                       name: 'recipeDetail',
-                      params: { id: 2 },
+                      params: { id: recipe.RecipeID },
                     }"
                   >
                     <img
                       class="recipe-image"
-                      src="@/assets/recipes-banner.jpg"
-                      alt="recipe.Recipe_Name"
+                      :src="recipe.Recipe_Photo"
+                      :alt="recipe.Recipe_Name"
                     />
                   </router-link>
                 </div>
@@ -27,252 +31,40 @@
                     class="menu__link recipe-title"
                     :to="{
                       name: 'recipeDetail',
-                      params: { id: 2 },
+                      params: { id: recipe.RecipeID },
                     }"
-                    >recipe.Recipe_Name</router-link
+                    >{{ recipe.Recipe_Name }}</router-link
                   >
                   <div class="seperator"></div>
-                  <div class="recipe-user-details">
-                    <i class="icons fa fa-regular fa-user" />
-                    <router-link
-                      class="menu__link icons__link user-name"
-                      :to="{
-                        name: 'userDetails',
-                        params: { id: 2 },
-                      }"
-                      >Author</router-link
-                    >
+                  <div class="recipe-details">
+                    <div class="recipe-details__user">
+                      <i class="icons fa fa-regular fa-user" />
+                      <router-link
+                        class="menu__link icons__link user-name"
+                        :to="{
+                          name: 'userDetails',
+                          params: { id: recipe.Author },
+                        }"
+                        >{{ recipe.Author }}</router-link
+                      >
+                    </div>
+                    <div class="recipe-details__time">
+                      <i class="icons fa-regular fa-clock"></i>
+                      {{ recipe.Total_Time }}
+                    </div>
                   </div>
                   <p class="recipe-text">
-                    Nam ornare arcu turpis, nec congu Curabitur quis euismod.
-                    Nam ornare arcu turpis, nec congu Curabitur quis euismod.
-                    Nam ornare gsfg
-                  </p>
-                </div>
-              </div>
-              <div class="recipe-listing__card">
-                <div class="recipe-listing__card__image">
-                  <router-link
-                    class="image-link"
-                    :to="{
-                      name: 'recipeDetail',
-                      params: { id: 2 },
-                    }"
-                  >
-                    <img
-                      class="recipe-image"
-                      src="@/assets/recipes-banner.jpg"
-                      alt="recipe.Recipe_Name"
-                    />
-                  </router-link>
-                </div>
-                <div class="recipe-listing__card__about">
-                  <router-link
-                    class="menu__link recipe-title"
-                    :to="{
-                      name: 'recipeDetail',
-                      params: { id: 2 },
-                    }"
-                    >recipe.Recipe_Name</router-link
-                  >
-                  <div class="seperator"></div>
-                  <div class="recipe-user-details">
-                    <i class="icons fa fa-regular fa-user" />
-                    <router-link
-                      class="menu__link icons__link user-name"
-                      :to="{
-                        name: 'userDetails',
-                        params: { id: 2 },
-                      }"
-                      >Author</router-link
-                    >
-                  </div>
-                  <p class="recipe-text">
-                    Nam ornare arcu turpis, nec congu Curabitur quis euismod.
-                    Nam ornare arcu turpis, nec congu Curabitur quis euismod.
-                    Nam ornare gsfg
-                  </p>
-                </div>
-              </div>
-              <div class="recipe-listing__card">
-                <div class="recipe-listing__card__image">
-                  <router-link
-                    class="image-link"
-                    :to="{
-                      name: 'recipeDetail',
-                      params: { id: 2 },
-                    }"
-                  >
-                    <img
-                      class="recipe-image"
-                      src="@/assets/recipes-banner.jpg"
-                      alt="recipe.Recipe_Name"
-                    />
-                  </router-link>
-                </div>
-                <div class="recipe-listing__card__about">
-                  <router-link
-                    class="menu__link recipe-title"
-                    :to="{
-                      name: 'recipeDetail',
-                      params: { id: 2 },
-                    }"
-                    >recipe.Recipe_Name</router-link
-                  >
-                  <div class="seperator"></div>
-                  <div class="recipe-user-details">
-                    <i class="icons fa fa-regular fa-user" />
-                    <router-link
-                      class="menu__link icons__link user-name"
-                      :to="{
-                        name: 'userDetails',
-                        params: { id: 2 },
-                      }"
-                      >Author</router-link
-                    >
-                  </div>
-                  <p class="recipe-text">
-                    Nam ornare arcu turpis, nec congu Curabitur quis euismod.
-                    Nam ornare arcu turpis, nec congu Curabitur quis euismod.
-                    Nam ornare gsfg
-                  </p>
-                </div>
-              </div>
-              <div class="recipe-listing__card">
-                <div class="recipe-listing__card__image">
-                  <router-link
-                    class="image-link"
-                    :to="{
-                      name: 'recipeDetail',
-                      params: { id: 2 },
-                    }"
-                  >
-                    <img
-                      class="recipe-image"
-                      src="@/assets/recipes-banner.jpg"
-                      alt="recipe.Recipe_Name"
-                    />
-                  </router-link>
-                </div>
-                <div class="recipe-listing__card__about">
-                  <router-link
-                    class="menu__link recipe-title"
-                    :to="{
-                      name: 'recipeDetail',
-                      params: { id: 2 },
-                    }"
-                    >recipe.Recipe_Name</router-link
-                  >
-                  <div class="seperator"></div>
-                  <div class="recipe-user-details">
-                    <i class="icons fa fa-regular fa-user" />
-                    <router-link
-                      class="menu__link icons__link user-name"
-                      :to="{
-                        name: 'userDetails',
-                        params: { id: 2 },
-                      }"
-                      >Author</router-link
-                    >
-                  </div>
-                  <p class="recipe-text">
-                    Nam ornare arcu turpis, nec congu Curabitur quis euismod.
-                    Nam ornare arcu turpis, nec congu Curabitur quis euismod.
-                    Nam ornare gsfg
-                  </p>
-                </div>
-              </div>
-              <div class="recipe-listing__card">
-                <div class="recipe-listing__card__image">
-                  <router-link
-                    class="image-link"
-                    :to="{
-                      name: 'recipeDetail',
-                      params: { id: 2 },
-                    }"
-                  >
-                    <img
-                      class="recipe-image"
-                      src="@/assets/recipes-banner.jpg"
-                      alt="recipe.Recipe_Name"
-                    />
-                  </router-link>
-                </div>
-                <div class="recipe-listing__card__about">
-                  <router-link
-                    class="menu__link recipe-title"
-                    :to="{
-                      name: 'recipeDetail',
-                      params: { id: 2 },
-                    }"
-                    >recipe.Recipe_Name</router-link
-                  >
-                  <div class="seperator"></div>
-                  <div class="recipe-user-details">
-                    <i class="icons fa fa-regular fa-user" />
-                    <router-link
-                      class="menu__link icons__link user-name"
-                      :to="{
-                        name: 'userDetails',
-                        params: { id: 2 },
-                      }"
-                      >Author</router-link
-                    >
-                  </div>
-                  <p class="recipe-text">
-                    Nam ornare arcu turpis, nec congu Curabitur quis euismod.
-                    Nam ornare arcu turpis, nec congu Curabitur quis euismod.
-                    Nam ornare gsfg
-                  </p>
-                </div>
-              </div>
-              <div class="recipe-listing__card">
-                <div class="recipe-listing__card__image">
-                  <router-link
-                    class="image-link"
-                    :to="{
-                      name: 'recipeDetail',
-                      params: { id: 2 },
-                    }"
-                  >
-                    <img
-                      class="recipe-image"
-                      src="@/assets/recipes-banner.jpg"
-                      alt="recipe.Recipe_Name"
-                    />
-                  </router-link>
-                </div>
-                <div class="recipe-listing__card__about">
-                  <router-link
-                    class="menu__link recipe-title"
-                    :to="{
-                      name: 'recipeDetail',
-                      params: { id: 2 },
-                    }"
-                    >recipe.Recipe_Name</router-link
-                  >
-                  <div class="seperator"></div>
-                  <div class="recipe-user-details">
-                    <i class="icons fa fa-regular fa-user" />
-                    <router-link
-                      class="menu__link icons__link user-name"
-                      :to="{
-                        name: 'userDetails',
-                        params: { id: 2 },
-                      }"
-                      >Author</router-link
-                    >
-                  </div>
-                  <p class="recipe-text">
-                    Nam ornare arcu turpis, nec congu Curabitur quis euismod.
-                    Nam ornare arcu turpis, nec congu Curabitur quis euismod.
-                    Nam ornare gsfg
+                    {{
+                      recipe.Directions
+                        ? recipe.Directions.split("**")[0].slice(0, 100)
+                        : ""
+                    }}...
                   </p>
                 </div>
               </div>
               <div class="pagination">
                 <vue-awesome-paginate
-                  :total-items="50"
+                  :total-items="totalPage"
                   :items-per-page="perPage"
                   :max-pages-shown="5"
                   v-model="currentPage"
@@ -287,19 +79,23 @@
             <div class="recipes-side-bar__popular">
               <h2 class="recipes-side-bar__popular__title">Top 5 Recipes</h2>
               <ul>
-                <li class="recipes-side-bar__popular__list">
+                <li
+                  v-for="(popular, index) in mostPopular"
+                  :key="index"
+                  class="recipes-side-bar__popular__list"
+                >
                   <div class="side-bar-image">
                     <router-link
                       class="image-link"
                       :to="{
                         name: 'recipeDetail',
-                        params: { id: 2 },
+                        params: { id: popular.RecipeID },
                       }"
                     >
                       <img
                         class="side-bar-image__image"
-                        src="@/assets/recipes-banner.jpg"
-                        alt="recipe.Recipe_Name"
+                        :src="popular.Recipe_Photo"
+                        :alt="popular.Recipe_Name"
                       />
                     </router-link>
                   </div>
@@ -308,117 +104,9 @@
                       class="menu__link side-bar-text__title"
                       :to="{
                         name: 'recipeDetail',
-                        params: { id: 2 },
+                        params: { id: popular.RecipeID },
                       }"
-                      >recipe.Recipe_Name</router-link
-                    >
-                  </div>
-                </li>
-                <li class="recipes-side-bar__popular__list">
-                  <div class="side-bar-image">
-                    <router-link
-                      class="image-link"
-                      :to="{
-                        name: 'recipeDetail',
-                        params: { id: 2 },
-                      }"
-                    >
-                      <img
-                        class="side-bar-image__image"
-                        src="@/assets/recipes-banner.jpg"
-                        alt="recipe.Recipe_Name"
-                      />
-                    </router-link>
-                  </div>
-                  <div class="side-bar-text">
-                    <router-link
-                      class="menu__link side-bar-text__title"
-                      :to="{
-                        name: 'recipeDetail',
-                        params: { id: 2 },
-                      }"
-                      >recipe.Recipe_Name</router-link
-                    >
-                  </div>
-                </li>
-                <li class="recipes-side-bar__popular__list">
-                  <div class="side-bar-image">
-                    <router-link
-                      class="image-link"
-                      :to="{
-                        name: 'recipeDetail',
-                        params: { id: 2 },
-                      }"
-                    >
-                      <img
-                        class="side-bar-image__image"
-                        src="@/assets/recipes-banner.jpg"
-                        alt="recipe.Recipe_Name"
-                      />
-                    </router-link>
-                  </div>
-                  <div class="side-bar-text">
-                    <router-link
-                      class="menu__link side-bar-text__title"
-                      :to="{
-                        name: 'recipeDetail',
-                        params: { id: 2 },
-                      }"
-                      >recipe.Recipe_Name</router-link
-                    >
-                  </div>
-                </li>
-                <li class="recipes-side-bar__popular__list">
-                  <div class="side-bar-image">
-                    <router-link
-                      class="image-link"
-                      :to="{
-                        name: 'recipeDetail',
-                        params: { id: 2 },
-                      }"
-                    >
-                      <img
-                        class="side-bar-image__image"
-                        src="@/assets/recipes-banner.jpg"
-                        alt="recipe.Recipe_Name"
-                      />
-                    </router-link>
-                  </div>
-                  <div class="side-bar-text">
-                    <router-link
-                      class="menu__link side-bar-text__title"
-                      :to="{
-                        name: 'recipeDetail',
-                        params: { id: 2 },
-                      }"
-                      >recipe.Recipe_Name</router-link
-                    >
-                  </div>
-                </li>
-                <li class="recipes-side-bar__popular__list">
-                  <div class="side-bar-image">
-                    <router-link
-                      class="image-link"
-                      :to="{
-                        name: 'recipeDetail',
-                        params: { id: 2 },
-                      }"
-                    >
-                      <img
-                        class="side-bar-image__image"
-                        src="@/assets/recipes-banner.jpg"
-                        alt="recipe.Recipe_Name"
-                      />
-                    </router-link>
-                  </div>
-                  <div class="side-bar-text">
-                    <router-link
-                      class="menu__link side-bar-text__title"
-                      :to="{
-                        name: 'recipeDetail',
-                        params: { id: 2 },
-                      }"
-                      >recipe.Recipe_Name</router-link
+                      >{{ popular.Recipe_Name }}</router-link
                     >
                   </div>
                 </li>
@@ -442,15 +130,24 @@ export default {
       type: Array,
       default: () => [],
     },
+    activePage: {
+      type: Number,
+      default: 1,
+    },
+    totalPage: {
+      type: Number,
+      default: 1,
+    },
   },
   data() {
     return {
-      currentPage: 1,
+      currentPage: this.activePage,
       perPage: 9,
     };
   },
   methods: {
     onClickHandler(page) {
+      console.log(this.currentPage);
       this.$emit("pageChanged", page);
     },
   },
@@ -489,6 +186,7 @@ export default {
           &__image {
             .recipe-image {
               width: 100%;
+              height: 220px;
             }
           }
           &__about {
@@ -507,16 +205,26 @@ export default {
               background: #f94616;
               margin: auto auto 10px;
             }
-            .recipe-user-details {
-              font-size: 12px;
-              color: black;
-              .user-name {
+            .recipe-details {
+              display: flex;
+              align-items: center;
+              margin-left: 1rem;
+              &__user {
+                font-size: 12px;
+                color: black;
+                .user-name {
+                  margin-left: 1rem;
+                }
+              }
+              &__time {
+                font-size: 12px;
+                color: black;
                 margin-left: 1rem;
               }
             }
             .recipe-text {
               font-size: 15px;
-              line-height: 26px;
+              line-height: 22px;
             }
           }
         }

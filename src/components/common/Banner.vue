@@ -53,4 +53,8 @@ export default {
   background-position: top;
   background-image: url("@/assets/add-banner.jpg");
 }
+.recipe-detail {
+  background-position: left;
+  background-image: url("@/assets/recipe-detail-banner.jpg");
+}
 </style>
