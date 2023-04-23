@@ -6,6 +6,12 @@ export function getReviewList() {
 export function getRecipeReviews(id) {
     return axios.get(`/Recipe/Review/Details/${id}`);
 }
+export function getRecipeReviewsWithPagination(id, params = {
+    PageSize: Number,
+    PageNumberPerPage: Number,
+}) {
+    return axios.get(`/Recipe/Review/Details/${id}`, { params });
+}
 export function getUserReviews(id) {
     return axios.get(`/User/Review/Details/${id}`);
 }

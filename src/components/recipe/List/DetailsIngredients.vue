@@ -2,22 +2,10 @@
   <div class="ingredient-list">
     <h3 class="ingredient-list__header">Ingredients</h3>
     <div class="ingredient-list__ingredient">
-      <ul>
+      <ul v-for="(ingredient, index) in ingredients" :key="index">
         <li>
           <i class="fa-solid fa-carrot ingredient-icon"></i>
-          <span class="ingredient-name">Sugar</span>
-        </li>
-        <li>
-          <i class="fa-solid fa-carrot ingredient-icon"></i>
-          <span class="ingredient-name">Sugar</span>
-        </li>
-        <li>
-          <i class="fa-solid fa-carrot ingredient-icon"></i>
-          <span class="ingredient-name">Sugar</span>
-        </li>
-        <li>
-          <i class="fa-solid fa-carrot ingredient-icon"></i>
-          <span class="ingredient-name">Sugar</span>
+          <span class="ingredient-name">{{ ingredient }}</span>
         </li>
       </ul>
     </div>
@@ -26,6 +14,17 @@
 <script>
 export default {
   name: "DetailsIngredients",
+  props: {
+    recipeIngredients: {
+      type: String,
+      default: "",
+    },
+  },
+  computed: {
+    ingredients() {
+      return this.recipeIngredients.split(",");
+    },
+  },
 };
 </script>
 <style lang="scss">

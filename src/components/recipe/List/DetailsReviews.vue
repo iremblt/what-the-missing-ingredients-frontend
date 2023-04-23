@@ -7,17 +7,28 @@
           <span class="review-sub">Avarage Rating: </span>
           <star-rating
             class="rating-display"
-            v-model:rating="rating"
+            :rating="recipeDetail.RatingAvg"
             :read-only="true"
             :round-start-rating="false"
             v-bind="starRatingOptions"
           ></star-rating>
         </div>
         <div>
-          <span class="review-sub">Total Rates Count : 0</span>
+          <span class="review-sub"
+            >Total Review Count : {{ recipeDetail.Review_Count }}</span
+          >
         </div>
       </div>
-      <DetailsComments />
+      <DetailsComments :recipeReviews="recipeReviews" />
+    </div>
+    <div class="pagination recipe-details__reviews__pagination">
+      <vue-awesome-paginate
+        :total-items="reviewTotalPage"
+        :items-per-page="10"
+        :max-pages-shown="5"
+        v-model="currentPage"
+        :on-click="onClickHandler"
+      />
     </div>
   </div>
 </template>
@@ -27,9 +38,27 @@ import DetailsComments from "./DetailsComments.vue";
 export default {
   name: "DetailsReviews",
   components: { StarRating, DetailsComments },
+  props: {
+    recipeDetail: {
+      type: Object,
+      default: () => {},
+    },
+    recipeReviews: {
+      type: Array,
+      default: () => [],
+    },
+    reviewTotalPage: {
+      type: Number,
+      default: 0,
+    },
+    reviewActivePage: {
+      type: Number,
+      default: 1,
+    },
+  },
   data() {
     return {
-      rating: 4.7,
+      currentPage: this.reviewActivePage,
     };
   },
   computed: {
@@ -39,6 +68,12 @@ export default {
         inactiveColor: "#ebc692",
         activeColor: "#f94616",
       };
+    },
+  },
+  methods: {
+    onClickHandler(page) {
+      console.log(this.currentPage);
+      this.$emit("pageChanged", page);
     },
   },
 };
@@ -74,6 +109,9 @@ export default {
         font-size: 13px;
         color: #767474;
       }
+    }
+    &__pagination {
+      justify-content: center;
     }
   }
 }

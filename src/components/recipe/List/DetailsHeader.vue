@@ -17,7 +17,7 @@
         <div class="wrapper-slider__slider__box__text__rating">
           <star-rating
             class="rating-box"
-            v-model:rating="rating"
+            :rating="recipeDetail.RatingAvg"
             :read-only="true"
             :round-start-rating="false"
             v-bind="starRatingOptions"
@@ -41,9 +41,7 @@ export default {
     },
   },
   data() {
-    return {
-      rating: this.recipeDetail.RatingAvg,
-    };
+    return {};
   },
   computed: {
     starRatingOptions() {
