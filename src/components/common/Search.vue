@@ -11,12 +11,17 @@
                   type="search"
                   id="search_box__form__input"
                   class="search_box__form__input__bar"
-                  placeholder="recipe"
+                  :placeholder="searchType"
                   v-model="text"
                 />
               </label>
               <button class="search_box__form__button">
                 <i
+                  v-if="searchType === 'chef'"
+                  class="search_box__form__button__icon fa-solid fa-user"
+                ></i>
+                <i
+                  v-else
                   class="search_box__form__button__icon fa-solid fa-pepper-hot"
                 ></i>
               </button>
@@ -30,6 +35,12 @@
 <script>
 export default {
   name: "SearchBox",
+  props: {
+    searchType: {
+      type: String,
+      default: "recipe",
+    },
+  },
   data() {
     return {
       text: "",
