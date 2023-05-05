@@ -36,6 +36,9 @@
             :value="TotalTime"
             @input="totalTimeChanged($event.target.value)"
           />
+          <div v-if="!validation.TotalTime">
+            <p class="validation">Total Time is required</p>
+          </div>
         </div>
       </div>
     </div>
@@ -49,7 +52,19 @@ export default {
       PrepareTime: "",
       CookTime: "",
       TotalTime: "",
+      validation: {
+        TotalTime: false,
+      },
     };
+  },
+  watch: {
+    TotalTime(value) {
+      if (value && value !== "") {
+        this.validation.TotalTime = true;
+      } else {
+        this.validation.TotalTime = false;
+      }
+    },
   },
   methods: {
     prepareTimeChanged(time) {

@@ -1,21 +1,15 @@
 <template>
-    <div class="home">
-      <List />
-    </div>
-  </template>
-  
-  <script>
-  import List from "@/components/recipe/List.vue";
-  export default {
-    name: "RecipeList",
-    components: {
-      List,
-    },
-    data() {
-      return {};
-    },
-    created() {},
-    methods: {},
-  };
-  </script>
-  
+  <div class="home"></div>
+</template>
+
+<script>
+export default {
+  name: "RecipeList",
+  components: {},
+  data() {
+    return {};
+  },
+  created() {},
+  methods: {},
+};
+</script>

@@ -9,6 +9,9 @@
         type="text"
         v-model="recipe.RecipeName"
       />
+      <div v-if="!validation.RecipeName">
+        <p class="validation">Recipe Name is required</p>
+      </div>
       <FormSteps :recipeSteps="steps" />
       <label class="recipe-add-form__label" for="recipe-photo"
         >Recipe Photo</label
@@ -48,6 +51,9 @@
           chooseLabel="Upload"
           :maxFileSize="1000000"
         />
+      </div>
+      <div v-if="!validation.RecipePhoto">
+        <p class="validation">Recipe Photo is required</p>
       </div>
       <FormTimes
         @prepareTimeChanged="prepareTimeChanged"
@@ -106,7 +112,44 @@ export default {
         lemon: false,
       },
       addIngredients: [],
+      validation: {
+        RecipeName: false,
+        RecipePhoto: false,
+        Ingredients: true,
+        Directions: true,
+        TotalTime: false,
+      },
     };
+  },
+  watch: {
+    "recipe.Directions"(value) {
+      if (value && value !== "") {
+        this.validation.Directions = true;
+      } else {
+        this.validation.Directions = false;
+      }
+    },
+    "recipe.RecipeName"(value) {
+      if (value && value !== "") {
+        this.validation.RecipeName = true;
+      } else {
+        this.validation.RecipeName = false;
+      }
+    },
+    "recipe.RecipePhoto"(value) {
+      if (value && value !== "") {
+        this.validation.RecipePhoto = true;
+      } else {
+        this.validation.RecipePhoto = false;
+      }
+    },
+    "recipe.TotalTime"(value) {
+      if (value && value !== "") {
+        this.validation.TotalTime = true;
+      } else {
+        this.validation.TotalTime = false;
+      }
+    },
   },
   methods: {
     addStepsInOneLine() {
@@ -147,7 +190,10 @@ export default {
     },
     submitRecipe() {
       this.addStepsInOneLine();
-      this.$emit("submitRecipe", this.recipe);
+      const isValid = Object.values(this.validation).includes(false);
+      if (!isValid) {
+        this.$emit("submitRecipe", this.recipe);
+      }
     },
   },
 };
@@ -206,5 +252,9 @@ export default {
       margin-top: 60px;
     }
   }
+}
+.validation {
+  color: red;
+  font-size: 13px;
 }
 </style>

@@ -45,20 +45,43 @@
                       >Chefs</router-link
                     >
                   </li>
+                  <li v-if="!isAuthenticated" class="menu__element">
+                    <button
+                      class="menu__link button"
+                      @click="openModal('Login')"
+                    >
+                      Login
+                    </button>
+                  </li>
+                  <li v-if="!isAuthenticated" class="menu__element">
+                    <button
+                      class="menu__link button"
+                      @click="openModal('Register')"
+                    >
+                      Register
+                    </button>
+                  </li>
+                  <li v-else class="menu__element">
+                    <router-link
+                      class="menu__link"
+                      :to="{
+                        name: 'userEdit',
+                        params: {
+                          id: getCurrentProfileId ? getCurrentProfileId : 0,
+                        },
+                      }"
+                      >Profile</router-link
+                    >
+                  </li>
+                  <li v-if="isAuthenticated" class="menu__element">
+                    <button class="menu__link button" @click="logout">
+                      Log out
+                    </button>
+                  </li>
                   <li class="menu__element">
                     <router-link class="menu__link" to="/AboutUs"
                       >About Us</router-link
                     >
-                  </li>
-                  <li class="menu__element">
-                    <router-link class="menu__link" to="/login"
-                      >Login</router-link
-                    >
-                  </li>
-                  <li class="menu__element">
-                    <router-link class="menu__link" to="/register"
-                      >Register
-                    </router-link>
                   </li>
                 </ul>
               </nav>
@@ -68,15 +91,69 @@
       </div>
     </div>
   </header>
+  <LoginRegisterModal
+    v-show="visible"
+    :type="modalType"
+    @close="close"
+    @submittedModal="submit"
+  >
+  </LoginRegisterModal>
 </template>
 
 <script>
+import LoginRegisterModal from "@/components/user/LoginRegisterModal.vue";
+import { login, register } from "@/utils/user";
 export default {
   name: "CommonHeaders",
+  components: { LoginRegisterModal },
   data() {
-    return {};
+    return {
+      visible: false,
+      modalType: "Login",
+    };
   },
-  computed: {},
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters._isAuthenticated;
+    },
+    getCurrentProfileId() {
+      return this.$store.getters._getCurrentUser?.profileID;
+    },
+  },
+  methods: {
+    openModal(type) {
+      this.modalType = type;
+      this.visible = true;
+    },
+    close() {
+      this.visible = false;
+    },
+    submit(data) {
+      if (data.Gender) {
+        const user = data;
+        register(user)
+          .then((response) => {
+            console.log(response?.data);
+            this.modalType = "Login";
+            this.visible = true;
+          })
+          .catch((error) => console.error(error));
+      } else {
+        const user = {
+          email: data.email,
+          password: data.password,
+        };
+        login(user)
+          .then((response) => {
+            this.$store.commit("setUser", response?.data);
+          })
+          .catch((error) => console.error(error));
+      }
+    },
+    logout() {
+      this.$store.commit("setLogOutUser");
+    },
+  },
 };
 </script>
 
@@ -127,6 +204,14 @@ export default {
     display: inline-block;
     &:hover {
       color: #f94616 !important;
+    }
+  }
+  .button {
+    border: none;
+    background: none;
+    &:active {
+      color: #f94616 !important;
+      border-bottom: 2px inset #f94616;
     }
   }
 }

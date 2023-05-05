@@ -23,6 +23,9 @@
           <i class="fa-solid fa-trash"></i>
         </button>
       </div>
+      <div v-if="!validation.Directions">
+        <p class="validation">Directions is required</p>
+      </div>
     </div>
   </div>
 </template>
@@ -38,7 +41,19 @@ export default {
   data() {
     return {
       steps: this.recipeSteps,
+      validation: {
+        Directions: true,
+      },
     };
+  },
+  watch: {
+    steps(value) {
+      if (value && value !== "") {
+        this.validation.Directions = true;
+      } else {
+        this.validation.Directions = false;
+      }
+    },
   },
   methods: {
     addSteps() {

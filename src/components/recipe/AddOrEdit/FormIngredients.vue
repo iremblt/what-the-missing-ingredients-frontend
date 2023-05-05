@@ -159,7 +159,7 @@
           <label
             class="recipe-add-form__ingredients__more-label"
             for="recipe-ingredients"
-            >Add More Ingredients
+            >Add More Ingredients (*)
           </label>
           <button
             class="recipe-add-form__ingredients__more-plus"
@@ -184,6 +184,9 @@
               <i class="fa-solid fa-trash"></i>
             </button>
           </div>
+          <div v-if="!validation.Ingredients">
+            <p class="validation">Ingredients is required</p>
+          </div>
         </div>
       </div>
     </div>
@@ -206,14 +209,31 @@ export default {
     return {
       Ingredients: this.recipeIngredients,
       addIngredients: this.recipeAddIngredients,
+      validation: {
+        Ingredients: true,
+      },
     };
+  },
+  watch: {
+    addIngredients(value) {
+      console.log(value);
+      if (value && value !== "") {
+        this.validation.Ingredients = true;
+      } else {
+        this.validation.Ingredients = false;
+      }
+    },
   },
   methods: {
     addMoreIngredients() {
-      return this.addIngredients.push({ ingredient: "" });
+      this.addIngredients.push({ ingredient: "" });
+      this.validation.Ingredients = true;
     },
     removeMoreIngredient(index) {
-      return this.addIngredients.splice(index, 1);
+      this.addIngredients.splice(index, 1);
+      if (this.addIngredients.length < 1) {
+        this.validation.Ingredients = false;
+      }
     },
   },
 };
