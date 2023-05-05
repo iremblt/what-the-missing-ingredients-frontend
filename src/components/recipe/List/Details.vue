@@ -20,7 +20,13 @@
               </div>
               <DetailsTimes :recipeDetail="recipeDetail" />
               <DetailsDirections :recipeDetail="recipeDetail" />
-              <DetailsReviews />
+              <DetailsReviews
+                :recipeDetail="recipeDetail"
+                :recipeReviews="recipeReviews"
+                :reviewTotalPage="reviewTotalPage"
+                :reviewActivePage="PageSize"
+                @pageChanged="pageChanged($event)"
+              />
               <AddComment />
             </div>
           </div>
@@ -40,7 +46,10 @@ import {
   getRecipeDetail,
   getMostPopularRecipeListWithPagination,
 } from "@/utils/recipe";
-import { getRecipeReviews } from "@/utils/review";
+import {
+  getRecipeReviews,
+  getRecipeReviewsWithPagination,
+} from "@/utils/review";
 import DetailsHeader from "./DetailsHeader.vue";
 import DetailsTimes from "./DetailsTimes.vue";
 import DetailsDirections from "./DetailsDirections.vue";
@@ -64,12 +73,15 @@ export default {
       isLoading: false,
       recipeDetail: {},
       recipeReviews: [],
-      rating: 4.7,
+      PageSize: 1,
+      PageNumberPerPage: 10,
+      reviewTotalPage: 0,
     };
   },
   async created() {
     await this.getRecipe(this.$route.params.id);
     this.isLoading = false;
+    await this.getAllRecipesReviews(this.$route.params.id);
     await this.getRecipesReviews(this.$route.params.id);
     if (this.getMostPopularRecipes.length === 0) {
       this.isLoading = true;
@@ -92,8 +104,19 @@ export default {
         })
         .catch((error) => console.error(error));
     },
-    async getRecipesReviews(id) {
+    async getAllRecipesReviews(id) {
       await getRecipeReviews(id)
+        .then((response) => {
+          this.reviewTotalPage = response.data?.length;
+          this.isLoading = false;
+        })
+        .catch((error) => console.error(error));
+    },
+    async getRecipesReviews(id) {
+      await getRecipeReviewsWithPagination(id, {
+        PageSize: this.PageSize,
+        PageNumberPerPage: this.PageNumberPerPage,
+      })
         .then((response) => {
           this.recipeReviews = response.data || [];
           this.isLoading = false;
@@ -110,6 +133,12 @@ export default {
           this.isLoading = false;
         })
         .catch((error) => console.error(error));
+    },
+    async pageChanged(page) {
+      console.log(page);
+      this.PageSize = page;
+      this.isLoading = true;
+      await this.getRecipesReviews(this.$route.params.id);
     },
   },
 };

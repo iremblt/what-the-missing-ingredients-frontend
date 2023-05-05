@@ -31,7 +31,7 @@
         </div>
       </div>
     </div>
-    <detailsIngredients />
+    <DetailsIngredients :recipeIngredients="recipeDetail.Ingredients" />
   </div>
 </template>
 <script>
