@@ -7,7 +7,7 @@ import RecipeEdit from "../views/recipe/CreateOrEditPage.vue";
 import RecipeRecomendation from "../views/recipe/Recommendation.vue";
 import Login from "../views/user/LoginPage.vue";
 import Register from "../views/user/RegisterPage.vue";
-import UserList from "../views/user/ListPage.vue";
+import ChefList from "../views/user/ChefList.vue";
 import UserDetails from "../views/user/DetailsPage.vue";
 import UserEdit from "../views/user/EditPage.vue";
 
@@ -54,8 +54,8 @@ const routes = [
   },
   {
     path: "/chefs",
-    name: "userList",
-    component: UserList,
+    name: "chefList",
+    component: ChefList,
   },
   {
     path: "/user/detail/:id",

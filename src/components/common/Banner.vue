@@ -57,4 +57,8 @@ export default {
   background-position: left;
   background-image: url("@/assets/recipe-detail-banner.jpg");
 }
+.chefs-banner {
+  background-position: left;
+  background-image: url("@/assets/chefs-banner.jpg");
+}
 </style>

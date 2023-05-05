@@ -6,8 +6,8 @@
           <div class="add-recipe-text-area">
             <div class="add-recipe-text">
               <h2 class="add-recipe-text__title">
-                If you say I have a very good recipe and want everyone to know
-                it, share this recipe with us!
+                If you say I have a very good recipe and I want everyone to know
+                this recipe, share this recipe with us!
               </h2>
             </div>
             <div class="add-recipe-button">
