@@ -1,6 +1,6 @@
 const state = {
     recipe_pagination_list: null,
-    popular_recipe_list: null,
+    popular_recipe_list: null
 };
 const getters = {
     _getPaginationRecipeList(state) {
@@ -8,7 +8,7 @@ const getters = {
     },
     _getPopularRecipeList(state) {
         return state.popular_recipe_list;
-    },
+    }
 };
 const mutations = {
     setPaginationRecipeList(state, item) {
@@ -16,7 +16,7 @@ const mutations = {
     },
     setPopularRecipeList(state, item) {
         state.popular_recipe_list = item;
-    },
+    }
 };
 const actions = {
     setPaginationRecipeList(context, item) {
@@ -24,7 +24,7 @@ const actions = {
     },
     setPopularRecipeList(context, item) {
         context.commit("setPopularRecipeList", item);
-    },
+    }
 };
 export default {
     state,

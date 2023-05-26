@@ -27,7 +27,7 @@
                 :reviewActivePage="PageSize"
                 @pageChanged="pageChanged($event)"
               />
-              <AddComment />
+              <AddComment @submittedComment="submittedComment($event)" />
             </div>
           </div>
           <div class="col-md-4 col-lg-3">
@@ -36,19 +36,38 @@
         </div>
       </div>
     </div>
+    <Modal
+      v-show="visible"
+      :type="modalType"
+      @close="close"
+      @changeModal="changeModal"
+    >
+    </Modal>
+    <LoginRegisterModal
+      v-show="visibleLogin"
+      :type="loginModalType"
+      @close="closeLogin"
+      @submittedModal="submitLogin"
+    >
+    </LoginRegisterModal>
   </div>
 </template>
 <script>
 import BannerPage from "@/components/common/Banner.vue";
 import LoadingPage from "@/components/common/Loading.vue";
 import SideBar from "@/components/common/SideBar.vue";
+import Modal from "@/components/common/Modal.vue";
+import LoginRegisterModal from "@/components/user/LoginRegisterModal.vue";
+import { login, register } from "@/utils/user";
 import {
   getRecipeDetail,
   getMostPopularRecipeListWithPagination,
+  reviewCountEditRecipe,
 } from "@/utils/recipe";
 import {
   getRecipeReviews,
   getRecipeReviewsWithPagination,
+  addReview,
 } from "@/utils/review";
 import DetailsHeader from "./DetailsHeader.vue";
 import DetailsTimes from "./DetailsTimes.vue";
@@ -67,6 +86,8 @@ export default {
     DetailsDirections,
     DetailsReviews,
     AddComment,
+    Modal,
+    LoginRegisterModal,
   },
   data() {
     return {
@@ -76,6 +97,10 @@ export default {
       PageSize: 1,
       PageNumberPerPage: 10,
       reviewTotalPage: 0,
+      modalType: "successfull",
+      visible: false,
+      visibleLogin: false,
+      loginModalType: "Login",
     };
   },
   async created() {
@@ -93,6 +118,25 @@ export default {
       return this.$store.getters._getPopularRecipeList
         ? this.$store.getters._getPopularRecipeList
         : [];
+    },
+    isNewCommentAdded() {
+      return this.$store.getters._getIsNewCommentAdded;
+    },
+    isAuthenticated() {
+      return this.$store.getters._isAuthenticated;
+    },
+    getCurrentProfileId() {
+      return this.$store.getters._getCurrentUser?.profileID;
+    },
+  },
+  watch: {
+    isNewCommentAdded: function (value) {
+      if (value === true || value === "delete") {
+        this.isLoading = true;
+        this.addReviewCount();
+        this.getRecipesReviews(this.$route.params.id);
+        this.$store.commit("setNewCommentAdded", false);
+      }
     },
   },
   methods: {
@@ -139,6 +183,78 @@ export default {
       this.PageSize = page;
       this.isLoading = true;
       await this.getRecipesReviews(this.$route.params.id);
+    },
+    submittedComment(review) {
+      if (this.isAuthenticated) {
+        addReview(review)
+          .then((response) => {
+            console.log(response?.data);
+            this.modalType = "successfull";
+            this.$store.commit("setNewCommentAdded", true);
+          })
+          .catch((error) => console.error(error));
+      } else {
+        this.modalType = "fail";
+      }
+      this.visible = true;
+    },
+    close() {
+      this.visible = false;
+      if (this.modalType === "successfull") {
+        this.$router.push({
+          name: "recipeDetail",
+          params: { id: this.$route.params.id },
+        });
+      }
+    },
+    closeLogin() {
+      this.visibleLogin = false;
+    },
+    changeModal() {
+      this.visibleLogin = true;
+    },
+    submitLogin(data) {
+      if (data.Gender) {
+        const user = data;
+        register(user)
+          .then((response) => {
+            console.log(response?.data);
+            this.loginModalType = "Login";
+            this.visibleLogin = true;
+          })
+          .catch((error) => console.error(error));
+      } else {
+        const user = {
+          email: data.email,
+          password: data.password,
+        };
+        login(user)
+          .then((response) => {
+            this.$store.commit("setUser", response?.data);
+          })
+          .catch((error) => console.error(error));
+      }
+    },
+    addReviewCount() {
+      if (this.isNewCommentAdded === true) {
+        const count = this.recipeDetail.Review_Count
+          ? parseInt(this.recipeDetail.Review_Count) + 1
+          : 1;
+        reviewCountEditRecipe(this.$route.params.id, { count: count })
+          .then((response) => {
+            console.log(response?.data);
+          })
+          .catch((error) => console.error(error));
+      } else if (this.isNewCommentAdded === "delete") {
+        const count = this.recipeDetail.Review_Count
+          ? parseInt(this.recipeDetail.Review_Count) - 1
+          : 1;
+        reviewCountEditRecipe(this.$route.params.id, { count: count })
+          .then((response) => {
+            console.log(response?.data);
+          })
+          .catch((error) => console.error(error));
+      }
     },
   },
 };

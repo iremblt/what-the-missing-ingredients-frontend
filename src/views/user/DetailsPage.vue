@@ -1,11 +1,16 @@
 <template>
-  <div class="home"></div>
+  <div class="home">
+    <UserDetail />
+  </div>
 </template>
 
 <script>
+import UserDetail from "@/components/user/Details.vue";
 export default {
-  name: "RecipeList",
-  components: {},
+  name: "DetailsPage",
+  components: {
+    UserDetail,
+  },
   data() {
     return {};
   },

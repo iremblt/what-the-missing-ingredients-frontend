@@ -14,6 +14,13 @@ export default {
   data() {
     return {};
   },
+  watch: {
+    "$route.params.id": function (value) {
+      if (value) {
+        location.reload();
+      }
+    },
+  },
   created() {},
   methods: {},
 };

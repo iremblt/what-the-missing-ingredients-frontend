@@ -1,11 +1,14 @@
 <template>
-  <div class="home"></div>
+  <div class="home">
+    <UserEdit />
+  </div>
 </template>
 
 <script>
+import UserEdit from "@/components/user/Edit.vue";
 export default {
-  name: "RecipeList",
-  components: {},
+  name: "EditPage",
+  components: { UserEdit },
   data() {
     return {};
   },

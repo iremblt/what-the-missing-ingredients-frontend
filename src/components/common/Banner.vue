@@ -61,4 +61,7 @@ export default {
   background-position: left;
   background-image: url("@/assets/chefs-banner.jpg");
 }
+.user-detail-banner {
+  background-image: url("@/assets/user-detail-banner.jpg");
+}
 </style>

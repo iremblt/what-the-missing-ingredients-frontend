@@ -5,8 +5,11 @@
       <div class="recipes-add-page__container">
         <div>
           <div class="recipes-add-page__container__forms">
-            <h2 class="recipe-add-header">Add Recipes</h2>
-            <Form @submitRecipe="submitRecipe" />
+            <h2 v-if="recipeData?.RecipeID" class="recipe-add-header">
+              Edit Recipes
+            </h2>
+            <h2 v-else class="recipe-add-header">Add Recipes</h2>
+            <Form :recipeData="recipeData" @submitRecipe="submitRecipe" />
           </div>
         </div>
       </div>
@@ -33,7 +36,7 @@ import Form from "./Form.vue";
 import Modal from "@/components/common/Modal.vue";
 import LoginRegisterModal from "@/components/user/LoginRegisterModal.vue";
 import { login, register } from "@/utils/user";
-import { addRecipe } from "@/utils/recipe";
+import { addRecipe, editRecipe, getRecipeDetail } from "@/utils/recipe";
 export default {
   name: "AddOrEditRecipe",
   components: { BannerPage, Form, Modal, LoginRegisterModal },
@@ -44,6 +47,8 @@ export default {
       visibleLogin: false,
       loginModalType: "Login",
       recipeID: "",
+      recipeData: {},
+      isLoading: false,
     };
   },
   computed: {
@@ -54,14 +59,30 @@ export default {
       return this.$store.getters._getCurrentUser?.profileID;
     },
   },
+  async created() {
+    if (this.$route.params.id) {
+      this.isLoading = true;
+      await this.recipeDetail(this.$route.params.id);
+    }
+  },
   methods: {
+    async recipeDetail(id) {
+      await getRecipeDetail(id)
+        .then((response) => {
+          this.recipeData = response.data || {};
+          this.isLoading = false;
+        })
+        .catch((error) => console.error(error));
+    },
     submitRecipe(data) {
       console.log(data);
       if (this.isAuthenticated) {
         const recipe = {
           RecipeName: data?.RecipeName,
-          ReviewCount: "0",
-          RecipePhoto: data?.RecipePhoto,
+          ReviewCount: data?.ReviewCount || "0",
+          RecipePhoto:
+            data?.RecipePhoto ||
+            "https://images.media-allrecipes.com/images/79591.png",
           Author: this.getCurrentProfileId.toString(),
           PrepareTime: data?.PrepareTime,
           CookTime: data?.CookTime,
@@ -69,13 +90,23 @@ export default {
           Ingredients: data?.Ingredients,
           Directions: data?.Directions,
         };
-        addRecipe(recipe)
-          .then((response) => {
-            console.log(response?.data);
-            this.modalType = "successfull";
-            this.recipeID = response?.data.RecipeID;
-          })
-          .catch((error) => console.error(error));
+        if (this.$route.params.id) {
+          editRecipe(this.$route.params.id, recipe)
+            .then((response) => {
+              console.log(response?.data);
+              this.modalType = "successfull";
+              this.recipeID = response?.data.RecipeID;
+            })
+            .catch((error) => console.error(error));
+        } else {
+          addRecipe(recipe)
+            .then((response) => {
+              console.log(response?.data);
+              this.modalType = "successfull";
+              this.recipeID = response?.data.RecipeID;
+            })
+            .catch((error) => console.error(error));
+        }
       } else {
         this.modalType = "fail";
       }
@@ -85,7 +116,7 @@ export default {
       this.visible = false;
       if (this.modalType === "successfull") {
         this.$router.push({
-          name: "recipeEdit",
+          name: "recipeDetail",
           params: { id: this.recipeID },
         });
       }

@@ -65,7 +65,7 @@
                     <router-link
                       class="menu__link"
                       :to="{
-                        name: 'userEdit',
+                        name: 'userDetails',
                         params: {
                           id: getCurrentProfileId ? getCurrentProfileId : 0,
                         },

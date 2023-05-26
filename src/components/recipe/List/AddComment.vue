@@ -30,7 +30,6 @@
         <button
           class="recipe-details__commentAdd__submit__button"
           type="submit"
-          @click="submitComment"
         >
           Submit
         </button>
@@ -57,9 +56,20 @@ export default {
         activeColor: "#f94616",
       };
     },
+    getCurrentProfileId() {
+      return this.$store.getters._getCurrentUser?.profileID;
+    },
   },
   methods: {
-    submitComment() {},
+    submitComment() {
+      const data = {
+        RecipeID: this.$route.params.id,
+        profileID: this.getCurrentProfileId,
+        Comments: this.comment,
+        Rate: this.rating,
+      };
+      this.$emit("submittedComment", data);
+    },
   },
 };
 </script>

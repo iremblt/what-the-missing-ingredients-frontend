@@ -18,9 +18,33 @@ export function logout(token) {
 export function editUser(id, user) {
     return axios.put(`/User/Edit/${id}`, user);
 }
-export function changePassword(id, password) {
-    return axios.put(`/User/Change/Password/${id}`, password);
+export function changePassword(id, params) {
+    return axios.put(`/User/Change/Password/${id}`, params);
 }
 export function deleteUser(id) {
     return axios.delete(`/User/delete/${id}`);
+}
+export function searchByChefName(
+    params = {
+        name: String
+    }
+) {
+    return axios.get("/Chef/List", { params });
+}
+export function getChefListWithPagination(
+    params = {
+        PageSize: Number,
+        PageNumberPerPage: Number,
+    }
+) {
+    return axios.get("/Chef/List", { params });
+}
+export function getAllChefList() {
+    return axios.get("/Chef/List");
+}
+export function getUserRecipeDetail(id, params = {
+    PageSize: Number,
+    PageNumberPerPage: Number,
+}) {
+    return axios.get(`/User/Recipe/Detail/${id}`, { params });
 }

@@ -21,7 +21,10 @@
       </div>
       <DetailsComments :recipeReviews="recipeReviews" />
     </div>
-    <div class="pagination recipe-details__reviews__pagination">
+    <div
+      v-if="reviewTotalPage > 0"
+      class="pagination recipe-details__reviews__pagination"
+    >
       <vue-awesome-paginate
         :total-items="reviewTotalPage"
         :items-per-page="10"

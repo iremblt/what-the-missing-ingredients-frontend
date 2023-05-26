@@ -17,6 +17,30 @@ export default {
     Footter,
     Scroll,
   },
+  mounted() {
+    this.$router.beforeEach((to, from, next) => {
+      const requiresAuth = to.matched.some((route) => route.meta.requiresAuth);
+      if (requiresAuth && !this.isAuthenticated) {
+        if (to === "userEdit") {
+          if (this.getCurrentProfileId !== this.$route.params.id) {
+            next("/");
+          }
+        } else {
+          next("/");
+        }
+      } else {
+        next();
+      }
+    });
+  },
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters._isAuthenticated;
+    },
+    getCurrentProfileId() {
+      return this.$store.getters._getCurrentUser?.profileID;
+    },
+  },
 };
 </script>
 

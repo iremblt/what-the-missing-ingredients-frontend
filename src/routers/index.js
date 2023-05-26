@@ -34,6 +34,7 @@ const routes = [
     path: "/recipe/edit/:id",
     name: "recipeEdit",
     component: RecipeEdit,
+    meta: { requiresAuth: true }
   },
   {
     path: "/recipe/recomendation",
@@ -54,6 +55,7 @@ const routes = [
     path: "/user/edit/:id",
     name: "userEdit",
     component: UserEdit,
+    meta: { requiresAuth: true }
   },
 ];
 

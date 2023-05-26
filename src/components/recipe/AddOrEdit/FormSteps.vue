@@ -54,6 +54,11 @@ export default {
         this.validation.Directions = false;
       }
     },
+    recipeSteps(value) {
+      if (value) {
+        this.steps = this.recipeSteps;
+      }
+    },
   },
   methods: {
     addSteps() {

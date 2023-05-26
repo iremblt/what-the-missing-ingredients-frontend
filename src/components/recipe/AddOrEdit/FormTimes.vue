@@ -47,6 +47,12 @@
 <script>
 export default {
   name: "TimesRecipeForm",
+  props: {
+    recipeDetail: {
+      type: Object,
+      default: () => {},
+    },
+  },
   data() {
     return {
       PrepareTime: "",
@@ -63,6 +69,13 @@ export default {
         this.validation.TotalTime = true;
       } else {
         this.validation.TotalTime = false;
+      }
+    },
+    recipeDetail(value) {
+      if (value) {
+        this.PrepareTime = this.recipeDetail.Prepare_Time;
+        this.CookTime = this.recipeDetail.Cook_Time;
+        this.TotalTime = this.recipeDetail.Total_Time;
       }
     },
   },

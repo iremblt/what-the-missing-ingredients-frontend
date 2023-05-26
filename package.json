@@ -29,6 +29,7 @@
     "vue-mutation-observer": "^0.1.2",
     "vue-router": "^4.1.6",
     "vue-star-rating": "^2.1.0",
+    "vue-sweetalert2": "^5.0.5",
     "vuetify": "^3.1.13",
     "vuex": "^4.1.0",
     "vuex-persistedstate": "^4.1.0"

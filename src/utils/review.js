@@ -12,8 +12,11 @@ export function getRecipeReviewsWithPagination(id, params = {
 }) {
     return axios.get(`/Recipe/Review/Details/${id}`, { params });
 }
-export function getUserReviews(id) {
-    return axios.get(`/User/Review/Details/${id}`);
+export function getUserReviews(id, params = {
+    PageSize: Number,
+    PageNumberPerPage: Number,
+}) {
+    return axios.get(`/User/Review/Details/${id}`, { params });
 }
 export function addReview(review) {
     return axios.post(`/Review/Add`, review);

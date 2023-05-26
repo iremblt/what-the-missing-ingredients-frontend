@@ -54,6 +54,9 @@ export function addRecipe(data) {
 export function editRecipe(id, data) {
     return axios.put(`/Recipe/Edit/${id}`, data);
 }
+export function reviewCountEditRecipe(id, data) {
+    return axios.put(`/Recipe/Edit/ReviewCount/${id}`, data);
+}
 export function deleteRecipe(id) {
     return axios.delete(`/Recipe/delete/${id}`);
 }

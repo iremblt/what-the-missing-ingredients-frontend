@@ -13,7 +13,7 @@
             <div class="add-recipe-button">
               <button
                 class="add-recipe-button__text"
-                @click="$router.push('/recipeAdd')"
+                @click="$router.push('/recipe/add')"
               >
                 Add Recipe
               </button>

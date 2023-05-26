@@ -56,6 +56,7 @@
         <p class="validation">Recipe Photo is required</p>
       </div>
       <FormTimes
+        :recipeDetail="recipeData"
         @prepareTimeChanged="prepareTimeChanged"
         @cookTimeChanged="cookTimeChanged"
         @totalTimeChanged="totalTimeChanged"
@@ -70,7 +71,7 @@
           type="submit"
           @click="submitRecipe"
         >
-          Add Your Recipe
+          {{ buttonText }}
         </button>
       </div>
     </form>
@@ -84,6 +85,12 @@ import FileUpload from "primevue/fileupload";
 export default {
   components: { FormSteps, FormTimes, FormIngredients, FileUpload },
   name: "AddEditRecipeForm",
+  props: {
+    recipeData: {
+      type: Object,
+      default: () => {},
+    },
+  },
   data() {
     return {
       recipe: {
@@ -119,6 +126,7 @@ export default {
         Directions: true,
         TotalTime: false,
       },
+      buttonText: "Add Your Recipe",
     };
   },
   watch: {
@@ -148,6 +156,50 @@ export default {
         this.validation.TotalTime = true;
       } else {
         this.validation.TotalTime = false;
+      }
+    },
+    recipeData(value) {
+      if (value) {
+        const stepsSplit = this.recipeData.Directions.split("**");
+        let steps = [];
+        stepsSplit.map((step) => steps.push({ directions: step }));
+        this.recipe = {
+          RecipeName: this.recipeData.Recipe_Name,
+          Directions: this.recipeData.Directions,
+          RecipePhoto: this.recipeData.Recipe_Photo,
+          Author: this.recipeData.Author,
+          ReviewCount: this.recipeData.Review_Count,
+          PrepareTime: this.recipeData.Prepare_Time,
+          CookTime: this.recipeData.Cook_Time,
+          TotalTime: this.recipeData.Total_Time,
+          Ingredients: this.recipeData.Ingredients,
+        };
+        this.recipePhotoTypes = "link";
+        this.steps =
+          steps[steps.length - 1] === ""
+            ? steps.slice(0, steps.length - 1)
+            : steps;
+        if (this.recipeData.Ingredients) {
+          const recipeDetailIngredients =
+            this.recipeData.Ingredients.split(",");
+          let isInclude = false;
+          recipeDetailIngredients.map((ingredient) => {
+            Object.keys(this.Ingredients).every((key) => {
+              if (key === ingredient) {
+                this.Ingredients[key] = true;
+                isInclude = true;
+                return false;
+              } else {
+                isInclude = false;
+                return true;
+              }
+            });
+            if (!isInclude) {
+              this.addIngredients.push({ ingredient: ingredient });
+            }
+          });
+        }
+        this.buttonText = "Edit Your Recipe";
       }
     },
   },
@@ -214,6 +266,7 @@ export default {
     font-size: 14px;
     border: 1px solid #e4d9d1;
     margin-bottom: 30px;
+    outline: 0;
   }
   &__image {
     display: flex;
