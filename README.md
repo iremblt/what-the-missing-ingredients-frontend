@@ -1,4 +1,4 @@
-![dataset](https://github.com/iremblt/frontend/assets/85560757/43094ad8-1bad-4bd6-8fef-0d1b2bb2e9f8)![image](https://github.com/iremblt/frontend/assets/85560757/374d0543-d14f-49d9-8e26-d93666fcabd0)# What the missing ingredients frontend project 
+# What the missing ingredients frontend project 
 Backend project link (https://github.com/iremblt/What-The-Missing-Ingredients-Backend-)
 
 Abstract: In recent years, the use of machine learning and artificial intelligence has significantly increased and has been used in almost every sector. The use of these technologies on websites has also become widespread. The project presented in this thesis aims to develop a recipe recommendation system by utilizing a recommendation system. Using a machine learning-based recommendation system, it aims to recommend the most suitable recipes based on the ingredients entered by the users. To achieve this, a recipe website has been designed, and a recommendation system has been implemented on this website. The recommendation system was used as the distinguishing feature of this recipe site from other recipe sites.
